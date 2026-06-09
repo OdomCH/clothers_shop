@@ -41,10 +41,11 @@ Ensure your current workspace layout is nested as follows so the assets route pe
 ├── index.html        # Main interface skeleton views and structural modal markup
 ├── style.css         # Minimalist color palette values and structural layout rules
 ├── script.js        # Core transactional engine, calculations, and UI updates
-├── pic1.jpg          # Product asset image 1
-├── pic2.jpg          # Product asset image 2
-├── pic3.jpg          # Product asset image 3
-├── pic4.jpg          # Product asset image 4
-├── pic5.jpg          # Product asset image 5
-├── pic6.jpg          # Product asset image 6
-└── pic7.jpg          # Product asset image 7
+├── assets
+   ├── pic1.jpg          # Product asset image 1
+   ├── pic2.jpg          # Product asset image 2
+   ├── pic3.jpg          # Product asset image 3
+   ├── pic4.jpg          # Product asset image 4
+   ├── pic5.jpg          # Product asset image 5
+   ├── pic6.jpg          # Product asset image 6
+   └── pic7.jpg          # Product asset image 7
