@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NOCTVRE — Midnight Fashion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVIGATION
+  ============================================================ -->
+  <nav class="nav" id="nav">
+    <a href="#home" class="nav-logo" onclick="showPage('home')">NOCTVRE</a>
+    <div class="nav-links">
+      <a href="#" onclick="showPage('home')" class="nav-link">Shop</a>
+      <a href="#" onclick="showPage('orders')" class="nav-link">My Orders</a>
+    </div>
+    <button class="cart-btn" id="cartBtn" onclick="toggleCart()">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 01-8 0"/>
+      </svg>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </nav>
+
+  <!-- ============================================================
+       CART DRAWER
+  ============================================================ -->
+  <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button class="cart-close" onclick="toggleCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <!-- Populated by JS -->
+    </div>
+    <div class="cart-footer" id="cartFooter">
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cartTotal">$0.00</span>
+      </div>
+      <button class="btn-primary btn-full" onclick="goToCheckout()">Checkout</button>
+    </div>
+  </aside>
+
+  <!-- ============================================================
+       MAIN CONTENT PAGES
+  ============================================================ -->
+  <main>
+
+    <!-- ========== PAGE: HOME ========== -->
+    <section id="page-home" class="page active">
+
+      <!-- Hero -->
+      <div class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+          <p class="hero-eyebrow">New Collection — 2025</p>
+          <h1 class="hero-title">
+            <span class="hero-line" data-text="DRESSED">DRESSED</span>
+            <span class="hero-line hero-line--italic" data-text="for the">for the</span>
+            <span class="hero-line" data-text="NIGHT">NIGHT</span>
+          </h1>
+          <p class="hero-sub">Fashion that doesn't apologize. Wear what you mean.</p>
+          <a href="#products" class="btn-primary hero-cta" onclick="scrollToProducts()">Shop the Drop</a>
+        </div>
+        <div class="hero-scroll-hint">
+          <span>Scroll</span>
+          <div class="scroll-line"></div>
+        </div>
+      </div>
+
+      <!-- Marquee Banner -->
+      <div class="marquee-wrap">
+        <div class="marquee-track">
+          <span>FREE SHIPPING ON ORDERS OVER $150</span>
+          <span class="marquee-dot">✦</span>
+          <span>NEW DROPS EVERY FRIDAY</span>
+          <span class="marquee-dot">✦</span>
+          <span>MIDNIGHT COLLECTION NOW LIVE</span>
+          <span class="marquee-dot">✦</span>
+          <span>FREE SHIPPING ON ORDERS OVER $150</span>
+          <span class="marquee-dot">✦</span>
+          <span>NEW DROPS EVERY FRIDAY</span>
+          <span class="marquee-dot">✦</span>
+          <span>MIDNIGHT COLLECTION NOW LIVE</span>
+          <span class="marquee-dot">✦</span>
+        </div>
+      </div>
+
+      <!-- Products -->
+      <div class="section" id="products">
+        <div class="section-header">
+          <h2 class="section-title">The Collection</h2>
+          <p class="section-sub">Hand-selected pieces for those who move in the dark.</p>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="filter-bar">
+          <button class="filter-btn active" onclick="filterProducts('all', this)">All</button>
+          <button class="filter-btn" onclick="filterProducts('tops', this)">Tops</button>
+          <button class="filter-btn" onclick="filterProducts('bottoms', this)">Bottoms</button>
+          <button class="filter-btn" onclick="filterProducts('outerwear', this)">Outerwear</button>
+          <button class="filter-btn" onclick="filterProducts('accessories', this)">Accessories</button>
+        </div>
+
+        <div class="product-grid" id="productGrid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Editorial Banner -->
+      <div class="editorial-banner">
+        <div class="editorial-text">
+          <h2>Wear the<br><em>feeling.</em></h2>
+          <p>NOCTVRE is more than clothing — it's a posture. A declaration. Every piece is built to make you unforgettable.</p>
+          <a href="#products" class="btn-outline" onclick="scrollToProducts()">Explore All</a>
+        </div>
+        <div class="editorial-visual">
+          <div class="editorial-img-placeholder">
+            <div class="editorial-img-text">SS 2025</div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========== PAGE: CHECKOUT ========== -->
+    <section id="page-checkout" class="page">
+      <div class="checkout-wrap">
+        <div class="checkout-left">
+          <button class="back-btn" onclick="showPage('home')">← Back to Shop</button>
+          <h2 class="checkout-title">Checkout</h2>
+
+          <form id="checkoutForm" onsubmit="submitOrder(event)">
+            <div class="form-section">
+              <h4 class="form-section-label">Contact</h4>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>First Name</label>
+                  <input type="text" id="firstName" placeholder="Alex" required />
+                </div>
+                <div class="form-group">
+                  <label>Last Name</label>
+                  <input type="text" id="lastName" placeholder="Rivera" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="you@example.com" required />
+              </div>
+              <div class="form-group">
+                <label>Phone</label>
+                <input type="tel" id="phone" placeholder="+1 (555) 000-0000" />
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h4 class="form-section-label">Shipping Address</h4>
+              <div class="form-group">
+                <label>Street Address</label>
+                <input type="text" id="address" placeholder="123 Night Owl Lane" required />
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>City</label>
+                  <input type="text" id="city" placeholder="Los Angeles" required />
+                </div>
+                <div class="form-group">
+                  <label>ZIP</label>
+                  <input type="text" id="zip" placeholder="90001" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Country</label>
+                <select id="country" required>
+                  <option value="">Select country</option>
+                  <option value="US">United States</option>
+                  <option value="CA">Canada</option>
+                  <option value="GB">United Kingdom</option>
+                  <option value="AU">Australia</option>
+                  <option value="KH">Cambodia</option>
+                  <option value="SG">Singapore</option>
+                  <option value="OTHER">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h4 class="form-section-label">Payment</h4>
+              <div class="form-group">
+                <label>Card Number</label>
+                <input type="text" id="cardNum" placeholder="4242 4242 4242 4242" maxlength="19" oninput="formatCard(this)" required />
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Expiry</label>
+                  <input type="text" id="expiry" placeholder="MM / YY" maxlength="7" oninput="formatExpiry(this)" required />
+                </div>
+                <div class="form-group">
+                  <label>CVV</label>
+                  <input type="text" id="cvv" placeholder="123" maxlength="3" required />
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary btn-full btn-large">Place Order</button>
+          </form>
+        </div>
+
+        <div class="checkout-right">
+          <div class="order-summary">
+            <h4 class="summary-title">Order Summary</h4>
+            <div id="summaryItems" class="summary-items"></div>
+            <div class="summary-divider"></div>
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span id="summarySubtotal">$0.00</span>
+            </div>
+            <div class="summary-row">
+              <span>Shipping</span>
+              <span id="summaryShipping">$9.99</span>
+            </div>
+            <div class="summary-row summary-row--total">
+              <span>Total</span>
+              <span id="summaryTotal">$0.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== PAGE: RECEIPT ========== -->
+    <section id="page-receipt" class="page">
+      <div class="receipt-wrap">
+        <!-- Screen version nav -->
+        <div class="receipt-actions no-print">
+          <button class="back-btn" onclick="showPage('home')">← Continue Shopping</button>
+          <button class="btn-primary" onclick="window.print()">🖨 Print Receipt</button>
+        </div>
+
+        <!-- Receipt card (also used for print) -->
+        <div class="receipt-card" id="receiptCard">
+          <div class="receipt-header">
+            <div class="receipt-logo">NOCTVRE</div>
+            <div class="receipt-meta">
+              <p class="receipt-confirmed">✓ Order Confirmed</p>
+              <p id="receiptOrderId" class="receipt-order-id"></p>
+            </div>
+          </div>
+
+          <p class="receipt-thank">Thank you, <span id="receiptName"></span>.</p>
+          <p class="receipt-note">Your order is being prepared. You'll receive a confirmation email shortly.</p>
+
+          <div class="receipt-section-label">Items Ordered</div>
+          <table class="receipt-table" id="receiptItemsTable">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Size</th>
+                <th>Qty</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody id="receiptItems"></tbody>
+          </table>
+
+          <div class="receipt-totals">
+            <div class="receipt-total-row">
+              <span>Subtotal</span>
+              <span id="receiptSubtotal"></span>
+            </div>
+            <div class="receipt-total-row">
+              <span>Shipping</span>
+              <span id="receiptShipping"></span>
+            </div>
+            <div class="receipt-total-row receipt-total-row--final">
+              <span>Total Charged</span>
+              <span id="receiptTotal"></span>
+            </div>
+          </div>
+
+          <div class="receipt-section-label">Shipping To</div>
+          <p class="receipt-address" id="receiptAddress"></p>
+
+          <div class="receipt-footer">
+            <p>NOCTVRE — Midnight Fashion</p>
+            <p>noctvre.com · support@noctvre.com</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== PAGE: MY ORDERS ========== -->
+    <section id="page-orders" class="page">
+      <div class="orders-wrap">
+        <div class="orders-header">
+          <button class="back-btn" onclick="showPage('home')">← Back to Shop</button>
+          <h2 class="orders-title">Purchase History</h2>
+          <p class="orders-sub">All your past orders, right here.</p>
+        </div>
+
+        <div id="ordersEmpty" class="orders-empty" style="display:none">
+          <div class="orders-empty-icon">🛍</div>
+          <p>No orders yet. Your shopping history will appear here.</p>
+          <button class="btn-primary" onclick="showPage('home')">Start Shopping</button>
+        </div>
+
+        <div id="ordersTable" class="orders-table-wrap">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="footer no-print">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <p class="footer-logo">NOCTVRE</p>
+        <p class="footer-tagline">Midnight Fashion. Unapologetic style.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#">Instagram</a>
+        <a href="#">TikTok</a>
+        <a href="#">Returns</a>
+        <a href="#">Contact</a>
+      </div>
+      <p class="footer-copy">© 2025 NOCTVRE. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Size Picker Modal -->
+  <div class="modal-overlay" id="sizeModalOverlay" onclick="closeSizeModal()"></div>
+  <div class="size-modal" id="sizeModal">
+    <div class="size-modal-header">
+      <h3 id="sizeModalTitle">Select Size</h3>
+      <button onclick="closeSizeModal()">✕</button>
+    </div>
+    <div class="size-options" id="sizeOptions"></div>
+    <button class="btn-primary btn-full" onclick="confirmAddToCart()">Add to Cart</button>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+</html>
